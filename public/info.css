@@ -1,0 +1,58 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.listing-card {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.listing-img {
+  height: 400px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-weight: 700;
+}
+
+.description {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.location {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+}
+
+.other_review{
+  background-color: #f2f1f1;
+  padding: 1rem 1rem 1rem 1rem;
+  max-height: 35rem;   
+  overflow-y: auto; 
+}
+
+.each_review{
+  padding: 0.5rem 0 0 0.5rem;
+  margin-bottom: 1rem;
+}
+.each_review p {
+  margin-bottom: 0.4rem;
+}
+.profile_pic{
+  height: 3rem;
+  width: 3rem;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.review_date{
+  color: #555;
+  font-size: small;
+}

@@ -1,0 +1,47 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<% block('styles').append(`<link rel="stylesheet" href="/edit.css">`) %>
+
+<div class="row">
+<div class="col-8 offset-2">
+  <br>
+  <h3>Edit Listing</h3>
+<form action="/listings/<%= edit_list.id %>?_method=PUT" method="post" class="needs-validation" novalidate>
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" name="title" id="title" class="form-control" value="<%= edit_list.title %>" required>
+    <div class="invalid-feedback">Enter vlaid title</div>
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea rows="3" name="description" id="description" class="form-control" required><%= edit_list.description %></textarea>
+    <div class="invalid-feedback">Please give description</div>
+  </div>
+  <div class="row">
+    <div class="mb-3 col-md-4">
+      <label for="price" class="form-label">Price</label>
+      <input type="text" name="price" id="price" class="form-control" value="<%= edit_list.price %>" required>
+      <div class="invalid-feedback">Enter valid price</div>
+    </div>
+    <div class="mb-3 col-md-8">
+      <label for="country" class="form-label">Country</label>
+      <input type="text" name="country" id="country" class="form-control" value="<%= edit_list.country %>" required>
+      <div class="invalid-feedback">Choose country</div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="location" class="form-label">Location</label>
+    <input type="text" name="location" id="location" class="form-control" value="<%= edit_list.location%>" required>
+    <div class="invalid-feedback">Enter valid location</div>
+  </div>
+  <div class="mb-3">
+    <label for="img" class="form-label">Image link</label>
+    <textarea rows="3" name="image[url]" id="img" class="form-control"><%= edit_list.image.url %></textarea>
+  </div>
+  <button class="btn">Edit</button>
+  <br>
+</form>
+<br>
+</div>
+</div>
+
+

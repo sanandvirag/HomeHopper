@@ -1,0 +1,22 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<% block('styles').append(`<link rel="stylesheet" href="/listings.css">`) %>
+<% let arr = sample_data %>
+<div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 mt-5">
+  <% for(let i=0 ; i<arr.length ; i++){ %>
+    <div class="card">
+      <a href="/listings/<%= arr[i].id%>" class="view">
+        <img 
+          src="<%= arr[i].image?.url || 'https://www.buyrentkenya.com/discover/wp-content/uploads/2022/06/brk-blog-4reasons-why.png' %>" 
+          onerror="this.onerror=null; this.src='https://www.buyrentkenya.com/discover/wp-content/uploads/2022/06/brk-blog-4reasons-why.png';" 
+          class="card-img-top" 
+          alt="<%= arr[i].title || 'Listing image' %>"
+        >
+        <div class="card-body">
+          <p class="card-text title"><%= arr[i].title %></p>
+          <p class="card-text price"> &#8377;<%= arr[i].price %> per night</p>
+        </div>
+      </a>
+    </div>
+  <% } %> 
+</div>
+

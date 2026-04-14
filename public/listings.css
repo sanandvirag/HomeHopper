@@ -1,0 +1,28 @@
+.view{
+  color: black;
+  text-decoration: none;
+}
+.card-img-top{
+  width: 18rem !important;
+  height: 18rem !important;
+  border-radius: 1rem !important;
+}
+
+.card{
+  border: none !important;
+  margin-bottom: 2rem;
+}
+
+.card-body {
+  padding: 0px !important;
+}
+
+.price{
+  font-family: "Nunito", sans-serif;
+  font-size: 14px !important;
+  color: #222;
+}
+.title{
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: bold;
+}

@@ -2,6 +2,7 @@ const Listings = require("./models/listings");
 const ListingSchema = require("./schemas/listings_validation");
 const reviewSchema = require("./schemas/review_validation");
 const Review = require("./models/reviews");
+const ExpressError = require("./utils/ExpressError");
 
 const isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
@@ -56,13 +57,13 @@ const validateReview = (req, res, next) => {
 };
 
 const isAuthor = async (req, res, next)=>{
-  const {id} = req.params;
-  const review = await Review.findById(id);
+  const { id, reviewId } = req.params;
+  const review = await Review.findById(reviewId);
   if(!review){
-    req.flash("error", "listing not found");
+    req.flash("error", "review not found");
     return res.redirect("/listings");    
   }
-  if(!review.author.equals(res.locals.currUser._id)){
+  if(!res.locals.currUser || !review.author.equals(res.locals.currUser._id)){
     req.flash("error" , "you are not the owner");
     return res.redirect(`/listings/${id}`);
   }

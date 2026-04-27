@@ -91,12 +91,16 @@ app.use((req, res) => {
   res.status(404).send("Not Found");
 });
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 app.use((err, req, res, next)=>{
   let {statusCode=500 , message="something went wrong"} = err;
   res.status(statusCode).render("error.ejs",{msg:message , title:`Error ${statusCode}`});
 });
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.listen(port , ()=>{
   console.log(`app is listening to port ${port}`);
 });

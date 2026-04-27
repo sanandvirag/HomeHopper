@@ -5,6 +5,7 @@ if(process.env.NODE_ENV != "production"){
 const express = require("express");
 const app = express();
 const session = require("express-session");
+const MongoStore = require('connect-mongo').default;
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -25,8 +26,9 @@ const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
 const mongoose = require("mongoose");  
+const dburl = process.env.ATLAS_DB_URL;
 const main = async () => {
-  await mongoose.connect('mongodb://127.0.0.1:27017/HomeHooper');
+  await mongoose.connect(dburl);
 };
 
 main()                                
@@ -41,7 +43,20 @@ const listingsRouter = require("./routes/listing.js");
 const reviewsRouter  = require("./routes/review.js");
 const signupRouter = require("./routes/user.js");
 
+const store = MongoStore.create({
+  mongoUrl:dburl,
+  crypto:{
+    secret:"mysecretkey"
+  },
+  touchAfter:3600*24
+});
+
+store.on("error", (err) => {
+  console.log("ERROR IN MONGO SESSION STORE", err);
+});
+
 const sessionOptions = {
+  store,
   secret:"mysecretkey",
   resave:false,
   saveUninitialized:true,
@@ -51,6 +66,8 @@ const sessionOptions = {
     httpOnly:true
   }
 };
+
+
 
 app.use(session(sessionOptions));
 app.use(flash());

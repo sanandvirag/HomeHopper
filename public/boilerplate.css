@@ -4,6 +4,10 @@ body{
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
 }
+.form-control:focus {
+  box-shadow: 0 0 0 1px rgb(255, 56, 92) ;
+  border: none;
+}
 .container{
   flex: 1;
 }
@@ -21,6 +25,41 @@ body{
 .nav-link:hover{
   background-color: rgb(235, 233, 233);
   border-radius: 10px;
+}
+
+.btn-search{
+  background-color: rgb(255, 56, 92) !important;
+  color: white !important;
+  border: none;
+  border-radius: 50%;
+}
+.input-search{
+  border-radius: 16px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  width: 20rem;
+}
+
+@media (min-width: 992px){
+  .navbar .container-fluid{
+    position: relative;
+  }
+
+  .nav-search-center{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .nav-search-center .input-search{
+    width: 24rem;
+  }
+}
+
+@media (max-width: 575.98px){
+  .input-search{
+    width: 14rem;
+  }
 }
 
 .fa-regular{

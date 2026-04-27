@@ -1,9 +1,14 @@
+const { response } = require("express");
 const Listings = require("../models/listings");
 const wrapAsync = require("../utils/wrapAsync.js");
 
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapToken = process.env.MAP_TOKEN;
+const geocodingClient = mbxGeocoding({ accessToken: mapToken });
+
 const index = wrapAsync(async (req, res) => {
   const data = await Listings.find();
-  res.render("listings.ejs", { sample_data: data, title: "HomeHopper" });
+  res.render("listings.ejs", { sample_data: data, title: "RoamRest" });
 });
 
 const renderNewListingForm = (req, res) => {
@@ -11,11 +16,17 @@ const renderNewListingForm = (req, res) => {
 }
 
 const NewListingAddition =   wrapAsync(async (req, res) => {
+  let response = await geocodingClient.forwardGeocode({
+    query: req.body.location,
+    limit: 1
+  })
+  .send()
   const url = req.file.path;
-  const filename = req.file.filename
+  const filename = req.file.filename;
   const new_list = new Listings(req.body);
   new_list.image = {url , filename};
   new_list.owner = req.user._id;
+  new_list.geometry = response.body.features[0].geometry;
   await new_list.save();
   req.flash("success", "New Listing Added");
   res.redirect("/listings");
@@ -24,12 +35,11 @@ const NewListingAddition =   wrapAsync(async (req, res) => {
 const showListing =   wrapAsync(async (req, res) => {
   const { id } = req.params;
   const info = await Listings.findById(id).populate({path:"reviews",populate:{path:"author"}}).populate("owner");
-
+ 
   if (!info) {
     req.flash("error", "invalid request");
     return res.redirect("/listings");
   }
-
   res.render("info.ejs", { info, title: info.title });
 });
 
